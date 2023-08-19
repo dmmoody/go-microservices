@@ -1,7 +1,9 @@
 package database
 
 import (
+	"context"
 	"fmt"
+	"githab.com/dmmoody/go-microservices/internal/models"
 	"gorm.io/driver/postgres"
 	"gorm.io/gorm"
 	"gorm.io/gorm/schema"
@@ -10,6 +12,7 @@ import (
 
 type DatabaseClient interface {
 	Ready() bool
+	GetAllCustomers(ctx context.Context, email string) ([]models.Customer, error)
 }
 
 type Client struct {
@@ -18,9 +21,9 @@ type Client struct {
 
 func NewDatabaseClient() (DatabaseClient, error) {
 	dsn := fmt.Sprintf("host=%s user=%s password=%s dbname=%s port=%s sslmode=disable TimeZone=US/Eastern",
-		"localhost",
-		"dmmoody",
-		"",
+		"postgres",
+		"postgres",
+		"postgres",
 		"postgres",
 		"5432",
 	)
